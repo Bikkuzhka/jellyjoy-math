@@ -1,0 +1,294 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background:
+    linear-gradient(180deg, rgba(4, 26, 60, 0.25), rgba(1, 10, 30, 0.75)),
+    url("/bg-ocean.png") center / cover no-repeat fixed;
+  color: #e8f7ff;
+}
+
+/* Карточка игры */
+
+.game {
+  width: min(960px, 100% - 32px);
+  background: radial-gradient(circle at 0% 0%, #1a6fb0, #06335c 70%);
+  border-radius: 24px;
+  padding: 24px 24px 32px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border: 1px solid rgba(169, 224, 255, 0.6);
+}
+
+/* Шапка: заголовок + статистика */
+
+.game-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.game-title {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: #ffe6f5;        /* мягкий розовый */
+  text-shadow: none;
+}
+
+/* Блок со статистикой в одну строку */
+
+.game-stats {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 6px 10px;
+  min-width: 100px;
+
+  background: rgba(9, 56, 106, 0.92);
+  border-radius: 10px;
+  border: 1px solid rgba(150, 212, 255, 0.8);
+}
+
+.stat-label {
+  font-size: 15px;
+  line-height: 1.2;
+  color: #b5d5ff;
+}
+
+.stat-value {
+  font-size: 25px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+/* Внутренняя панель с задачей */
+
+.game-main {
+  margin-top: 8px;
+  background: radial-gradient(circle at 50% 0, rgba(95, 190, 240, 0.35), #072744 75%);
+  border-radius: 20px;
+  padding: 16px 16px 24px;
+  border: 1px solid rgba(118, 201, 244, 0.6);
+}
+
+.equation-panel {
+  text-align: center;
+  margin-bottom: 5px;
+  margin-top: 30px;
+}
+
+.equation-text {
+  font-size: 60px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  margin-bottom: 6px;
+  color: #f6fbff;
+  text-shadow: 0 0 6px rgba(156, 226, 255, 0.6); /* вдвое слабее */
+}
+
+.feedback {
+  min-height: 1.5em;
+  font-size: 25px;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.feedback--success {
+  color: #9ff7c2;
+}
+
+.feedback--error {
+  color: #ffb4c5;
+}
+
+/* Контейнер для медуз */
+
+.jellyfish-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+  gap: 16px;
+  min-height: 220px;
+  position: relative;
+  padding: 4px 4px 4px;
+}
+
+/* Базовый вид медузы */
+
+.jellyfish {
+  position: relative;
+  width: 180px;
+  height: 180px;
+  border: none;
+  padding: 0;
+  margin: 0;
+
+  background-color: transparent;
+  background-image: url("/jellyfish.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 45px;
+  font-weight: 800;
+  color: #ffffff;
+  text-shadow: 0 0 4px rgba(0, 0, 0, 0.7);
+
+  /* намного более мягкое свечение */
+  filter: drop-shadow(0 0 6px rgba(255, 170, 220, 0.5));
+
+  transition:
+    transform 0.2s ease,
+    filter 0.2s ease;
+  animation: jellyfish-idle 3s ease-in-out infinite;
+}
+
+/* цифра на шапочке медузы */
+
+.jellyfish-label {
+  display: inline-block;
+  transform: translateY(-40px);
+}
+
+/* хвосты отключены */
+
+.jellyfish::after {
+  content: none;
+}
+
+/* hover-эффект */
+
+.jellyfish:hover {
+  transform: translateY(-6px) scale(1.03);
+  filter: drop-shadow(0 0 10px rgba(255, 200, 240, 0.7));
+}
+
+/* Плавающая idle-анимация */
+
+@keyframes jellyfish-idle {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-6px) scale(1.04);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Правильный ответ: всплытие и растворение */
+
+.jellyfish--correct {
+  animation: jellyfish-correct 0.7s ease-out forwards;
+}
+
+@keyframes jellyfish-correct {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+    filter: drop-shadow(0 0 6px rgba(255, 170, 220, 0.6));
+  }
+  60% {
+    transform: translateY(-50px) scale(1.15);
+    opacity: 1;
+    filter: drop-shadow(0 0 14px rgba(191, 255, 205, 0.9)) brightness(1.06);
+  }
+  100% {
+    transform: translateY(-90px) scale(0.9);
+    opacity: 0;
+    filter: drop-shadow(0 0 0 rgba(0, 0, 0, 0));
+  }
+}
+
+/* Неправильный ответ: дрожание и лёгкое потускнение */
+
+.jellyfish--wrong {
+  animation: jellyfish-wrong 0.4s ease-out;
+}
+
+@keyframes jellyfish-wrong {
+  0% {
+    transform: translateX(0);
+    filter: drop-shadow(0 0 6px rgba(0, 0, 0, 0.6)) brightness(1);
+  }
+  20% {
+    transform: translateX(-6px);
+  }
+  40% {
+    transform: translateX(6px);
+  }
+  60% {
+    transform: translateX(-4px);
+    filter: drop-shadow(0 0 6px rgba(255, 120, 120, 0.7)) brightness(0.9);
+  }
+  80% {
+    transform: translateX(4px);
+  }
+  100% {
+    transform: translateX(0);
+    filter: drop-shadow(0 0 6px rgba(0, 0, 0, 0.6)) brightness(1);
+  }
+}
+
+/* Адаптив */
+
+@media (max-width: 640px) {
+  .game {
+    padding: 16px 12px 22px;
+  }
+
+  .game-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .game-stats {
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+
+  .equation-text {
+    font-size: 26px;
+  }
+
+  .jellyfish-container {
+    gap: 10px;
+  }
+
+  .jellyfish {
+    width: 120px;
+    height: 120px;
+    font-size: 32px;
+  }
+
+  .jellyfish-label {
+    transform: translateY(-30px);
+  }
+}

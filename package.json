@@ -1,0 +1,24 @@
+{
+  "name": "jellyjoy-math",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Подводная math-игра с анимированными медузами. TypeScript + CSS.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "keywords": [
+    "math",
+    "game",
+    "typescript",
+    "jellyfish",
+    "education"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "vite": "^5.0.0"
+  }
+}
